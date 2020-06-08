@@ -12,6 +12,8 @@
 				:showRoomsList="showRoomsList"
 				:textFormatting="textFormatting"
 				:isMobile="isMobile"
+        :roomsLoaded="roomsLoaded"
+        @fetchRooms="fetchRooms"
 				@fetchRoom="fetchRoom"
 				@addRoom="addRoom"
 			>
@@ -82,7 +84,8 @@ export default {
 		loadingRooms: { type: Boolean, default: false },
 		roomId: { type: [String, Number], default: null },
 		messages: { type: Array, default: () => [] },
-		messagesLoaded: { type: Boolean, default: false },
+    messagesLoaded: { type: Boolean, default: false },
+    roomsLoaded: {type: Boolean, default: false },
 		menuActions: { type: Array, default: () => [] },
 		messageActions: {
 			type: Array,
@@ -208,7 +211,10 @@ export default {
 		},
 		addRoom() {
 			this.$emit('addRoom')
-		},
+    },
+    fetchRooms(reset) {
+      this.$emit('fetchRooms', reset);
+    },
 		fetchMessages(options) {
 			this.$emit('fetchMessages', { room: this.room, options })
 		},

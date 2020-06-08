@@ -28,51 +28,64 @@
 			{{ textMessages.ROOMS_EMPTY }}
 		</div>
 
-		<div v-if="!loadingRooms" class="room-list">
-			<div
-				class="room-item"
-				v-for="room in filteredRooms"
-				:key="room.roomId"
-				:class="{ 'room-selected': selectedRoomId === room.roomId }"
-				@click="openRoom(room)"
-			>
-				<div
-					v-if="room.avatar"
-					class="room-avatar"
-					:style="{ 'background-image': `url('${room.avatar}')` }"
-				></div>
-				<div class="name-container text-ellipsis">
-					<div class="title-container">
-						<div
-							v-if="userStatus(room)"
-							class="state-circle"
-							:class="{ 'state-online': userStatus(room) === 'online' }"
-						></div>
-						<div class="room-name text-ellipsis">
-							{{ room.roomName }}
-						</div>
-						<div v-if="room.lastMessage" class="text-date">
-							{{ room.lastMessage.timestamp }}
-						</div>
-					</div>
-					<div
-						class="text-last"
-						:class="{ 'message-new': room.lastMessage.new }"
-						v-if="room.lastMessage"
-					>
-						<span v-if="room.lastMessage.seen">
-							<svg-icon name="checkmark" class="icon-check" />
-						</span>
-						<format-message
-							:content="getLastMessage(room)"
-							:deleted="!!room.lastMessage.deleted"
-							:formatLinks="false"
-							:textFormatting="textFormatting"
-							:singleLine="true"
-						></format-message>
-					</div>
-				</div>
-			</div>
+    <div ref="scrollContainer" class="container-scroll-roomlist">
+      <div v-if="!loadingRooms" class="room-list">
+        <div
+          class="room-item"
+          v-for="room in filteredRooms"
+          :key="room.roomId"
+          :class="{ 'room-selected': selectedRoomId === room.roomId }"
+          @click="openRoom(room)"
+        >
+          <div
+            v-if="room.avatar"
+            class="room-avatar"
+            :style="{ 'background-image': `url('${room.avatar}')` }"
+          ></div>
+          <div class="name-container text-ellipsis">
+            <div class="title-container">
+              <div
+                v-if="userStatus(room)"
+                class="state-circle"
+                :class="{ 'state-online': userStatus(room) === 'online' }"
+              ></div>
+              <div class="room-name text-ellipsis">
+                {{ room.roomName }}
+              </div>
+              <div v-if="room.lastMessage" class="text-date">
+                {{ room.lastMessage.timestamp }}
+              </div>
+            </div>
+            <div
+              class="text-last"
+              :class="{ 'message-new': room.lastMessage.new }"
+              v-if="room.lastMessage"
+            >
+              <span v-if="room.lastMessage.seen">
+                <svg-icon name="checkmark" class="icon-check" />
+              </span>
+              <format-message
+                :content="getLastMessage(room)"
+                :deleted="!!room.lastMessage.deleted"
+                :formatLinks="false"
+                :textFormatting="textFormatting"
+                :singleLine="true"
+              ></format-message>
+            </div>
+          </div>
+        </div>
+      </div>
+      <infinite-loading
+                v-if="filteredRooms.length"
+                spinner="spiral"
+                @infinite="loadMoreRooms"
+              >
+                <div slot="spinner">
+                  <loader :show="true" :infinite="true"></loader>
+                </div>
+                <div slot="no-result"></div>
+                <div slot="no-more"></div>
+              </infinite-loading>
 		</div>
 	</div>
 </template>
@@ -81,12 +94,12 @@
 import Loader from './Loader'
 import SvgIcon from './SvgIcon'
 import FormatMessage from './FormatMessage'
-
+import InfiniteLoading from 'vue-infinite-loading'
 import filteredUsers from '../utils/filterItems'
 
 export default {
 	name: 'rooms-list',
-	components: { Loader, SvgIcon, FormatMessage },
+	components: { Loader, SvgIcon, FormatMessage, InfiniteLoading },
 
 	props: {
 		currentUserId: { type: [String, Number], required: true },
@@ -97,26 +110,80 @@ export default {
 		isMobile: { type: Boolean, required: true },
 		rooms: { type: Array, required: true },
 		loadingRooms: { type: Boolean, required: true },
-		room: { type: Object, required: true }
+    room: { type: Object, required: true },
+    roomsLoaded: { type: Boolean, required: true }
 	},
 
 	data() {
 		return {
 			filteredRooms: this.rooms || [],
-			selectedRoomId: ''
+      selectedRoomId: '',
+      loadingMoreRooms: false,
+      infiniteState: null,
+      scrollIcon: false,
 		}
-	},
+  },
+
+  mounted() {
+    this.$refs.scrollContainer.addEventListener('scroll', e => {
+      setTimeout(() => {
+        this.scrollIcon =
+          e.target.scrollHeight > 500 &&
+          e.target.scrollHeight - e.target.scrollBottom > 1000
+      }, 200)
+    })
+  },
 
 	watch: {
-		rooms(val) {
-			this.filteredRooms = val
+    loadingRooms(val) {
+      if (val) this.infiniteState = null
+    },
+		rooms(newVal, oldVal) {
+      const element = this.$refs.scrollContainer
+      if (!element) return
+
+      const options = { bottom: element.scrollHeight }
+
+      if (oldVal && newVal && oldVal.length === newVal.length - 1) {
+        this.filteredRooms = newVal
+        return setTimeout(() => {
+          options.behavior = 'smooth'
+          element.scrollTo(options)
+        }, 50)
+      }
+
+      if (this.infiniteState) {
+        this.infiniteState.loaded()
+        setTimeout(() => (this.loadingMoreRooms = false), 0)
+      } else if (newVal.length) {
+        setTimeout(() => {
+          element.scrollTo(options)
+          this.loadingRooms = false
+        }, 0)
+      }
+      this.filteredRooms = newVal
 		},
 		room(val) {
 			if (val) this.selectedRoomId = val.roomId
-		}
+    },
+    roomsLoaded(val) {
+      if (val) this.loadingRooms = false
+      if (this.infiniteState) this.infiniteState.complete()
+    }
 	},
 
 	methods: {
+    loadMoreRooms(infiniteState) {
+      if (this.loadingMoreRooms) return
+
+      if (this.roomsLoaded) {
+        return infiniteState.complete()
+      }
+
+      this.infiniteState = infiniteState
+      this.$emit('fetchRooms', false)
+      this.loadingMoreRooms = true
+    },
 		searchRoom(ev) {
 			this.filteredRooms = filteredUsers(
 				this.rooms,
@@ -163,6 +230,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container-scroll-roomlist {
+	background: var(--chat-sidemenu-bg-color);
+	flex: 1;
+	overflow-y: scroll;
+	margin-right: 1px;
+	margin-bottom: 60px;
+	-webkit-overflow-scrolling: touch;
+}
 .rooms-container {
 	display: flex;
 	flex-flow: column;
