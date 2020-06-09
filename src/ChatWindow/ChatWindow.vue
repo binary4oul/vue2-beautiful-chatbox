@@ -16,6 +16,7 @@
         @fetchRooms="fetchRooms"
 				@fetchRoom="fetchRoom"
 				@addRoom="addRoom"
+        @searchRoom="searchRoom"
 			>
 				<template v-slot:rooms-header>
 					<slot name="rooms-header"></slot>
@@ -213,7 +214,10 @@ export default {
 			this.$emit('addRoom')
     },
     fetchRooms(reset) {
-      this.$emit('fetchRooms', reset);
+      this.$emit('fetchRooms', reset)
+    },
+    searchRoom(keyword) {
+      this.$emit('searchRoom', keyword)
     },
 		fetchMessages(options) {
 			this.$emit('fetchMessages', { room: this.room, options })
