@@ -83,7 +83,7 @@
                 <div slot="spinner">
                   <loader :show="true" :infinite="true"></loader>
                 </div>
-                <div slot="no-result"></div>
+                <div slot="no-results"></div>
                 <div slot="no-more"></div>
               </infinite-loading>
 		</div>
