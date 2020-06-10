@@ -7,7 +7,7 @@
 				:rooms="orderedRooms"
 				:loadingRooms="loadingRooms"
 				:room="room"
-      	:keyword="keyword"
+      	:keywordProp="keyword"
 				:textMessages="t"
 				:showAddRoom="showAddRoom"
 				:showRoomsList="showRoomsList"

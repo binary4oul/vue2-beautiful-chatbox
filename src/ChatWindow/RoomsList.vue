@@ -113,7 +113,7 @@ export default {
 		loadingRooms: { type: Boolean, required: true },
     room: { type: Object, required: true },
 		roomsLoaded: { type: Boolean, required: true },
-    keyword: { type: String, default: ''}
+    keywordProp: { type: String, default: ''}
 	},
 
 	data() {
@@ -122,7 +122,8 @@ export default {
       selectedRoomId: '',
       loadingMoreRooms: false,
       infiniteState: null,
-      scrollIcon: false
+      scrollIcon: false,
+      keyword: ''
 		}
   },
 
@@ -171,8 +172,16 @@ export default {
     roomsLoaded(val) {
       if (val) this.loadingRooms = false
       if (this.infiniteState) this.infiniteState.complete()
+    },
+    keywordProp: {
+      immediate: true,
+      handler(val) {
+        if (val !== '') {
+          this.keyword = val;
+        }
+      }
     }
-	},
+  },
 
 	methods: {
     loadMoreRooms(infiniteState) {
