@@ -112,7 +112,8 @@ export default {
 		rooms: { type: Array, required: true },
 		loadingRooms: { type: Boolean, required: true },
     room: { type: Object, required: true },
-    roomsLoaded: { type: Boolean, required: true }
+		roomsLoaded: { type: Boolean, required: true },
+    keyword: { type: String, default: ''}
 	},
 
 	data() {
@@ -121,8 +122,7 @@ export default {
       selectedRoomId: '',
       loadingMoreRooms: false,
       infiniteState: null,
-      scrollIcon: false,
-      keyword: ''
+      scrollIcon: false
 		}
   },
 

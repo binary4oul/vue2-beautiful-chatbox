@@ -7,6 +7,7 @@
 				:rooms="orderedRooms"
 				:loadingRooms="loadingRooms"
 				:room="room"
+      	:keyword="keyword"
 				:textMessages="t"
 				:showAddRoom="showAddRoom"
 				:showRoomsList="showRoomsList"
@@ -101,7 +102,8 @@ export default {
 		showEmojis: { type: Boolean, default: true },
 		showReactionEmojis: { type: Boolean, default: true },
 		textFormatting: { type: Boolean, default: true },
-		newMessage: { type: Object, default: null }
+		newMessage: { type: Object, default: null },
+		keyword: { type: String, default: ''}
 	},
 
 	data() {
