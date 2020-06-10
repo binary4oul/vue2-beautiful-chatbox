@@ -118,8 +118,6 @@ export default {
 				if (this.roomId) {
 					const room = newVal.find(r => r.roomId === this.roomId)
 					this.fetchRoom({ room })
-				} else if (!this.isMobile) {
-					this.fetchRoom({ room: this.orderedRooms[0] })
 				} else {
 					this.showRoomsList = true
 				}
@@ -217,6 +215,7 @@ export default {
       this.$emit('fetchRooms', reset)
     },
     searchRoom(keyword) {
+      this.room = {};
       this.$emit('searchRoom', keyword)
     },
 		fetchMessages(options) {

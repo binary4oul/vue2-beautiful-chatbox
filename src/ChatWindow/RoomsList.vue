@@ -187,6 +187,7 @@ export default {
       this.loadingMoreRooms = true
     },
 		searchRoom(ev) {
+      this.selectedRoomId = null
 			this.$emit('searchRoom', this.keyword)
 		},
 		openRoom(room) {
