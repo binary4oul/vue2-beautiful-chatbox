@@ -7,7 +7,7 @@
 		<slot name="rooms-header"></slot>
 
 		<div class="box-search">
-			<div class="icon-search" v-if="rooms.length">
+			<div class="icon-search">
 				<svg-icon name="search" />
 			</div>
 			<input
@@ -16,7 +16,6 @@
 				autocomplete="off"
 				@keyup.enter="searchRoom"
         v-model="keyword"
-				v-show="rooms.length"
 			/>
 			<div v-if="showAddRoom" class="svg-button add-icon" @click="addRoom">
 				<svg-icon name="add" />
