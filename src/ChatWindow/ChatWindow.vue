@@ -272,6 +272,7 @@ a {
 }
 
 .card-window {
+  font-family: "Barlow", sans-serif;
 	width: 100%;
 	display: block;
 	max-width: 100%;
