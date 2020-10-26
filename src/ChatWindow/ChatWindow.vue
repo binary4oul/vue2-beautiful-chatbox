@@ -189,7 +189,7 @@ export default {
 				const aVal = a.lastMessage || { date: 0 }
 				const bVal = b.lastMessage || { date: 0 }
 
-				return aVal.date > bVal.date ? -1 : bVal.date > aVal.date ? 1 : 0
+				return a.roomId == 'VCC ADMIN' || b.roomId === 'VCC ADMIN' ? 1 : aVal.date > bVal.date ? -1 : bVal.date > aVal.date ? 1 : 0
 			})
 		}
 	},
@@ -260,7 +260,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../styles/index.scss';
 
 * {
