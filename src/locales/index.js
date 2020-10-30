@@ -8,5 +8,6 @@ export default {
 	SEARCH: 'Search',
 	IS_ONLINE: 'is online',
 	LAST_SEEN: 'last seen ',
-	IS_TYPING: 'is writing...'
+	IS_TYPING: 'is writing...',
+	ERROR_UPLOAD_IMAGE: ''
 }

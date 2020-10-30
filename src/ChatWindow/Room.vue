@@ -227,12 +227,16 @@
 import InfiniteLoading from 'vue-infinite-loading'
 import vClickOutside from 'v-click-outside'
 import emojis from 'vue-emoji-picker/src/emojis'
+import Toasted from 'vue-toasted'
+import Vue from 'vue'
+ 
 
 import Loader from './Loader'
 import Message from './Message'
 import SvgIcon from './SvgIcon'
 import EmojiPicker from './EmojiPicker'
 
+Vue.use(Toasted)
 const { messagesValid } = require('../utils/roomValidation')
 const { detectMobile } = require('../utils/mobileDetection')
 
@@ -559,18 +563,26 @@ export default {
 		async onFileChange(files) {
 			this.resetImageFile()
 			const file = files[0]
-			const fileURL = URL.createObjectURL(file)
-			const blobFile = await fetch(fileURL).then(res => res.blob())
-
-			this.file = {
-				blob: blobFile,
-				name: file.name.split('.')[0],
-				size: file.size,
-				type: file.name.split('.')[1] || file.type,
-				localUrl: fileURL
+			if (file.size > 25600) {
+				this.$toasted.show(this.textMessages.ERROR_UPLOAD_IMAGE, {
+					type: 'error',
+					position: 'bottom-right',
+					duration: 2000
+				})
+				return
 			}
-			if (this.isImageCheck(this.file)) this.imageFile = fileURL
-			else this.message = file.name
+
+			this.file = await this.convertToBase64(file)
+			if (['png', 'jpg', 'jpeg', 'svg'].includes(file.type.split("/")[1])) this.imageFile = this.file
+		},
+
+		convertToBase64(file) {
+			return new Promise((resolve, reject) => {
+				const reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = () => resolve(reader.result);
+				reader.onerror = error => reject(error);
+			});
 		},
 		isImageCheck(file) {
 			if (!file) return
