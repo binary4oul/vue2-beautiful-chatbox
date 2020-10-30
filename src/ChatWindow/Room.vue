@@ -54,7 +54,7 @@
 				</transition>
 			</div>
 		</div>
-		<div ref="scrollContainer" class="container-scroll">
+		<div ref="scrollRoomContainer" class="container-scroll">
 			<loader :show="loadingMessages"></loader>
 			<div class="messages-container">
 				<div :class="{ 'messages-hidden': loadingMessages }">
@@ -308,7 +308,7 @@ export default {
 			}
 		})
 
-		this.$refs.scrollContainer.addEventListener('scroll', e => {
+		this.$refs.scrollRoomContainer.addEventListener('scroll', e => {
 			this.hideOptions = true
 			setTimeout(() => {
 				this.scrollIcon =
@@ -340,7 +340,7 @@ export default {
 				}
 			})
 
-			const element = this.$refs.scrollContainer
+			const element = this.$refs.scrollRoomContainer
 			if (!element) return
 
 			const options = { top: element.scrollHeight }
@@ -357,9 +357,9 @@ export default {
 				setTimeout(() => (this.loadingMoreMessages = false), 0)
 			} else if (newVal.length) {
 				setTimeout(() => {
-					element.scrollTo(options)
+					this.scrollToBottom()
 					this.loadingMessages = false
-				}, 0)
+				}, 300)
 			}
 		},
 		messagesLoaded(val) {
@@ -534,7 +534,7 @@ export default {
 			setTimeout(() => this.resizeTextarea(), 0)
 		},
 		scrollToBottom() {
-			const element = this.$refs.scrollContainer
+			const element = this.$refs.scrollRoomContainer
 			element.scrollTo({ top: element.scrollHeight, behavior: 'smooth' })
 		},
 		onChangeInput() {
