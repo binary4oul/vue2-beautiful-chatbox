@@ -563,7 +563,7 @@ export default {
 		async onFileChange(files) {
 			this.resetImageFile()
 			const file = files[0]
-			if (file.size > 25600) {
+			if (file.size > 26214400) {
 				this.$toasted.show(this.textMessages.ERROR_UPLOAD_IMAGE, {
 					type: 'error',
 					position: 'bottom-right',
