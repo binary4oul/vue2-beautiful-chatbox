@@ -357,9 +357,9 @@ export default {
 				setTimeout(() => (this.loadingMoreMessages = false), 0)
 			} else if (newVal.length) {
 				setTimeout(() => {
+				  this.loadingMessages = false
 					this.scrollToBottom()
-					this.loadingMessages = false
-				}, 300)
+				}, 500)
 			}
 		},
 		messagesLoaded(val) {
@@ -456,10 +456,14 @@ export default {
 			setTimeout(() => this.focusTextarea(disableMobileFocus), 0)
 		},
 		resetImageFile() {
+			this.imageDimensions = null;
 			this.imageFile = null
 			this.editedMessage.file = null
 			this.file = null
 			this.focusTextarea()
+			setTimeout(() => {
+				this.resetTextareaSize()				
+			}, 500);
 		},
 		resetTextareaSize() {
 			if (!this.$refs['roomTextarea']) return
@@ -493,6 +497,9 @@ export default {
 			}
 
 			this.resetMessage(true)
+			setTimeout(() => {
+				this.scrollToBottom();				
+			}, 500);
 		},
 		loadMoreMessages(infiniteState) {
 			if (this.loadingMoreMessages) return
