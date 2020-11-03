@@ -446,7 +446,6 @@ export default {
 				return
 			}
 
-			this.resetTextareaSize()
 			this.message = ''
 			this.editedMessage = {}
 			this.messageReply = null
@@ -454,6 +453,9 @@ export default {
 			this.imageFile = null
 			this.emojiOpened = false
 			setTimeout(() => this.focusTextarea(disableMobileFocus), 0)
+			setTimeout(() => {
+				this.resetTextareaSize()				
+			}, 500);
 		},
 		resetImageFile() {
 			this.imageDimensions = null;
