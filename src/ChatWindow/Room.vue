@@ -178,6 +178,8 @@
 					v-model="message"
 					@input="onChangeInput"
 					@keydown.esc="resetMessage"
+					@focus="onFocusChat(true)"
+					@blur="onFocusChat(false)"
 					@keydown.enter.exact.prevent=""
 				></textarea>
 
@@ -290,7 +292,8 @@ export default {
 			emojisList: {},
 			hideOptions: true,
 			scrollIcon: false,
-			newMessages: []
+			newMessages: [],
+			isFocusChat: false	
 		}
 	},
 
@@ -434,6 +437,9 @@ export default {
 	},
 
 	methods: {
+		onFocusChat(isFocusChat) {
+			this.$emit('onFocusChat', isFocusChat);
+		},
 		addNewMessage(message) {
 			this.newMessages.push(message)
 		},
@@ -501,7 +507,7 @@ export default {
 			this.resetMessage(true)
 			setTimeout(() => {
 				this.scrollToBottom();				
-			}, 500);
+			}, 250);
 		},
 		loadMoreMessages(infiniteState) {
 			if (this.loadingMoreMessages) return

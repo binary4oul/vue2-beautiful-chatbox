@@ -53,6 +53,7 @@
 				@messageActionHandler="messageActionHandler"
 				@sendMessageReaction="sendMessageReaction"
 				@typingMessage="typingMessage"
+				@onFocusChat="onFocusChat"
 			>
 			</room>
 		</div>
@@ -195,6 +196,9 @@ export default {
 	},
 
 	methods: {
+		onFocusChat(isFocusChat) {
+			this.$emit('onFocusChat', isFocusChat);
+		},
 		updateResponsive() {
 			this.isMobile = window.innerWidth < this.responsiveBreakpoint
 		},
