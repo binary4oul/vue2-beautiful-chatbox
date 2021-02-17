@@ -94,6 +94,10 @@ export const defaultThemeStyles = {
 			background: '#fff'
 		},
 
+		noticeMessage: {
+			background: '#F8F3EE'
+		},
+
 		icons: {
 			search: '#9ca6af',
 			add: '#1976d2',
@@ -212,6 +216,10 @@ export const defaultThemeStyles = {
 			background: '#343740'
 		},
 
+		noticeMessage: {
+			background: 'rgba(58, 48, 22, 0.7)'
+		},
+
 		icons: {
 			search: '#596269',
 			add: '#fff',
@@ -249,7 +257,8 @@ export const cssThemeVars = ({
 	markdown,
 	room,
 	emoji,
-	icons
+	icons,
+	noticeMessage
 }) => {
 	return {
 		// general
@@ -336,6 +345,9 @@ export const cssThemeVars = ({
 
 		// emoji
 		'--chat-emoji-bg-color': emoji.background,
+
+		//noticeMessage
+		'--chat-bg-notice-message': noticeMessage.background,
 
 		// icons
 		'--chat-icon-color-search': icons.search,

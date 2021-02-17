@@ -10,9 +10,12 @@
 
 		<div
 			class="message-box"
-			:class="{ 'offset-current': message.sender_id === currentUserId }"
+			:class="{ 'offset-current': message.sender_id === currentUserId || message.is_notice}"
 		>
-			<div
+			<div v-if="message.is_notice" class="message-container notice-message message-card">
+				{{ message.content }}
+			</div>
+			<div v-else
 				class="message-container"
 				:class="{
 					'message-container-offset': messageOffset
@@ -314,7 +317,8 @@ export default {
 		showDate() {
 			return (
 				this.index > 0 &&
-				this.message.date !== this.messages[this.index - 1].date
+				this.message.date !== this.messages[this.index - 1].date &&
+				!this.message.is_notice
 			)
 		},
 		messageOffset() {
@@ -834,6 +838,11 @@ export default {
 		border: var(--chat-message-border-style-reaction-hover-me);
 		background: var(--chat-message-bg-color-reaction-hover-me);
 	}
+}
+
+.notice-message {
+	margin: 10px;
+	background: var(--chat-bg-notice-message);
 }
 
 @media only screen and (max-width: 768px) {

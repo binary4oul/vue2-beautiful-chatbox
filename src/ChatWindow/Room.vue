@@ -62,7 +62,7 @@
 						<div class="text-started" v-if="showNoMessages">
 							{{ textMessages.MESSAGES_EMPTY }}
 						</div>
-						<div class="text-started" v-if="showMessagesStarted">
+						<div class="text-started" v-if="showMessagesStarted && messages[0].date">
 							{{ textMessages.CONVERSATION_STARTED }} {{ messages[0].date }}
 						</div>
 					</transition>
