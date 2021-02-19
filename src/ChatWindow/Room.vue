@@ -80,7 +80,7 @@
 							<div slot="no-more"></div>
 						</infinite-loading>
 					</transition>
-					<transition-group name="fade-message">
+					<transition-group name="fade-message" v-if="roomId">
 						<div v-for="(message, i) in messages" :key="message._id">
 							<message
 								:currentUserId="currentUserId"

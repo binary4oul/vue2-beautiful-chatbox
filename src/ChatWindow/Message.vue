@@ -4,16 +4,16 @@
 			{{ message.date }}
 		</div>
 
-		<div v-if="newMessage._id === message._id" class="line-new">
+		<div v-if="newMessage._id === message._id && !message.is_notice" class="line-new">
 			{{ textMessages.NEW_MESSAGES }}
 		</div>
 
 		<div
 			class="message-box"
-			:class="{ 'offset-current': message.sender_id === currentUserId || message.is_notice}"
+			:class="{ 'offset-current': message.sender_id === currentUserId}"
 		>
 			<div v-if="message.is_notice" class="message-container notice-message message-card">
-				{{ message.content }}
+				<p v-html="message.content"></p>
 			</div>
 			<div v-else
 				class="message-container"
@@ -307,9 +307,11 @@ export default {
 				index: this.index
 			})
 		}
-		this.imageResponsive = {
-			maxHeight: this.$refs.imageRef.clientWidth - 18,
-			loaderTop: this.$refs.imageRef.clientWidth / 2
+		if (this.$refs.imageRef) {
+			this.imageResponsive = {
+				maxHeight: this.$refs.imageRef.clientWidth - 18,
+				loaderTop: this.$refs.imageRef.clientWidth / 2
+			}
 		}
 	},
 
