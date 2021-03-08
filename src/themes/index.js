@@ -171,7 +171,7 @@ export const defaultThemeStyles = {
 
 		message: {
 			background: '#22242a',
-			backgroundMe: '#4fb381',
+			backgroundMe: '#062924',
 			color: '#fff',
 			colorStarted: '#9ca6af',
 			backgroundDeleted: '#1b1c21',
