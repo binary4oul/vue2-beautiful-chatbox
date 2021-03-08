@@ -59,11 +59,16 @@
 			<div class="messages-container">
 				<div :class="{ 'messages-hidden': loadingMessages }">
 					<transition name="fade-message">
-						<div class="text-started" v-if="showNoMessages">
-							{{ textMessages.MESSAGES_EMPTY }}
-						</div>
-						<div class="text-started" v-if="showMessagesStarted && messages[0].date">
-							{{ textMessages.CONVERSATION_STARTED }} {{ messages[0].date }}
+						<div>
+							<div class="text-started" v-if="showNoMessages">
+								{{ textMessages.MESSAGES_EMPTY }}
+							</div>
+							<div class="text-started" v-if="showMessagesStarted && messages[0].date">
+								{{ textMessages.CONVERSATION_STARTED }} {{ messages[0].date }}
+							</div>
+							<div class="message-container notice-message message-card" v-if="roomId && roomId !== 'VCC ADMIN'">
+								<p v-html="noticeMessage"></p>
+							</div>
 						</div>
 					</transition>
 					<transition name="fade-message">
@@ -273,7 +278,8 @@ export default {
 		showReactionEmojis: { type: Boolean, required: true },
 		textFormatting: { type: Boolean, required: true },
 		loadingRooms: { type: Boolean, required: true },
-		roomInfo: { type: Function }
+		roomInfo: { type: Function },
+		noticeMessage: {type: String}
 	},
 
 	data() {
@@ -1014,4 +1020,31 @@ textarea {
 		bottom: 70px;
 	}
 }
+	.message-container {
+		position: relative;
+		padding: 2px 10px;
+		align-items: end;
+		min-width: 100px;
+		box-sizing: content-box;
+	}
+
+	.notice-message {
+		margin: 10px;
+		background: var(--chat-bg-notice-message) !important;
+	}
+
+	.message-card {
+		background: var(--chat-message-bg-color);
+		color: var(--chat-message-color);
+		border-radius: 8px;
+		font-size: 14px;
+		padding: 6px 9px 3px;
+		max-width: 50%;
+		-webkit-transition-property: box-shadow, opacity;
+		transition-property: box-shadow, opacity;
+		transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+		will-change: box-shadow;
+		box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.1),
+			0 1px 1px -1px rgba(0, 0, 0, 0.11), 0 1px 2px -1px rgba(0, 0, 0, 0.11);
+	}
 </style>

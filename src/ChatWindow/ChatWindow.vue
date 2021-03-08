@@ -42,6 +42,7 @@
 				:isMobile="isMobile"
 				:loadingRooms="loadingRooms"
 				:roomInfo="$listeners.roomInfo"
+				:noticeMessage="noticeMessage"
 				@toggleRoomsList="toggleRoomsList"
 				@roomInfo="roomInfo"
 				@fetchMessages="fetchMessages"
@@ -104,7 +105,8 @@ export default {
 		showReactionEmojis: { type: Boolean, default: true },
 		textFormatting: { type: Boolean, default: true },
 		newMessage: { type: Object, default: null },
-		keyword: { type: String, default: ''}
+		keyword: { type: String, default: ''},
+		noticeMessage: {type: String, default: ''}
 	},
 
 	data() {

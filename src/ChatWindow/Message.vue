@@ -12,10 +12,7 @@
 			class="message-box"
 			:class="{ 'offset-current': message.sender_id === currentUserId}"
 		>
-			<div v-if="message.is_notice" class="message-container notice-message message-card">
-				<p v-html="message.content"></p>
-			</div>
-			<div v-else
+			<div
 				class="message-container"
 				:class="{
 					'message-container-offset': messageOffset
@@ -840,11 +837,6 @@ export default {
 		border: var(--chat-message-border-style-reaction-hover-me);
 		background: var(--chat-message-bg-color-reaction-hover-me);
 	}
-}
-
-.notice-message {
-	margin: 10px;
-	background: var(--chat-bg-notice-message);
 }
 
 @media only screen and (max-width: 768px) {
