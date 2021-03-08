@@ -587,8 +587,20 @@ export default {
 				return
 			}
 
+			if (!this.isImageCheck(file)) {
+				this.$toasted.show(this.textMessages.IMAGE_INVALID, {
+					type: 'error',
+					position: 'bottom-right',
+					duration: 2000
+				})
+				return
+			}
+
 			this.file = await this.convertToBase64(file)
-			if (['png', 'jpg', 'jpeg', 'svg'].includes(file.type.split("/")[1])) this.imageFile = this.file
+
+			if (['png', 'jpg', 'jpeg'].includes(file.type.split("/")[1])) {
+				this.imageFile = this.file
+			}
 		},
 
 		convertToBase64(file) {
@@ -601,7 +613,7 @@ export default {
 		},
 		isImageCheck(file) {
 			if (!file) return
-			const imageTypes = ['png', 'jpg', 'jpeg', 'svg']
+			const imageTypes = ['png', 'jpg', 'jpeg']
 			const { type } = file
 			return imageTypes.some(t => type.includes(t))
 		},
