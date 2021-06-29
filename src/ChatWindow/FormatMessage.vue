@@ -22,11 +22,10 @@
 							!singleLine && checkType(message, 'multiline-code')
 					}"
 					:href="message.href"
-					target="_blank"
-					><svg-icon v-if="deleted" name="deleted" class="icon-deleted" />{{
-						message.value
-					}}</component
-				>
+					target="_blank">
+					<svg-icon v-if="deleted" name="deleted" class="icon-deleted" />
+					<span v-html="message.value" />
+					</component>
 			</template>
 		</div>
 		<div v-else>{{ content }}</div>

@@ -66,9 +66,6 @@
 							<div class="text-started" v-if="showMessagesStarted && messages[0].date">
 								{{ textMessages.CONVERSATION_STARTED }} {{ messages[0].date }}
 							</div>
-							<div class="message-container notice-message message-card" v-if="roomId && roomId !== 'VCC ADMIN'">
-								<p v-html="noticeMessage"></p>
-							</div>
 						</div>
 					</transition>
 					<transition name="fade-message">
@@ -1033,11 +1030,6 @@ textarea {
 		align-items: end;
 		min-width: 100px;
 		box-sizing: content-box;
-	}
-
-	.notice-message {
-		margin: 10px;
-		background: var(--chat-bg-notice-message) !important;
 	}
 
 	.message-card {

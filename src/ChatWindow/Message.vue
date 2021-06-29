@@ -24,7 +24,8 @@
 					:class="{
 						'message-highlight': isMessageHover(message),
 						'message-current': message.sender_id === currentUserId,
-						'message-deleted': message.deleted
+						'message-deleted': message.deleted,
+						'notice-message': message.is_notice
 					}"
 					@mouseover="onHoverMessage(message)"
 					@mouseleave="onLeaveMessage"
@@ -501,7 +502,10 @@ export default {
 	box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.1),
 		0 1px 1px -1px rgba(0, 0, 0, 0.11), 0 1px 2px -1px rgba(0, 0, 0, 0.11);
 }
-
+.notice-message {
+	margin: 10px;
+	background: var(--chat-bg-notice-message) !important;
+}
 .line-new {
 	color: var(--chat-message-color-new-messages);
 	position: relative;
