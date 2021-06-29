@@ -244,6 +244,14 @@ export default {
 	margin-right: 1px;
 	margin-bottom: 60px;
 	-webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 11px;
+    height: 42px;
+  }
 }
 .rooms-container {
 	display: flex;
