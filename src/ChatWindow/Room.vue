@@ -231,7 +231,7 @@ import vClickOutside from 'v-click-outside'
 import emojis from 'vue-emoji-picker/src/emojis'
 import Toasted from 'vue-toasted'
 import Vue from 'vue'
- 
+
 
 import Loader from './Loader'
 import Message from './Message'
@@ -293,7 +293,7 @@ export default {
 			hideOptions: true,
 			scrollIcon: false,
 			newMessages: [],
-			isFocusChat: false	
+			isFocusChat: false
 		}
 	},
 
@@ -460,7 +460,7 @@ export default {
 			this.emojiOpened = false
 			setTimeout(() => this.focusTextarea(disableMobileFocus), 0)
 			setTimeout(() => {
-				this.resetTextareaSize()				
+				this.resetTextareaSize()
 			}, 500);
 		},
 		resetImageFile() {
@@ -470,7 +470,7 @@ export default {
 			this.file = null
 			this.focusTextarea()
 			setTimeout(() => {
-				this.resetTextareaSize()				
+				this.resetTextareaSize()
 			}, 500);
 		},
 		resetTextareaSize() {
@@ -506,7 +506,7 @@ export default {
 
 			this.resetMessage(true)
 			setTimeout(() => {
-				this.scrollToBottom();				
+				this.scrollToBottom();
 			}, 250);
 		},
 		loadMoreMessages(infiniteState) {
@@ -693,6 +693,14 @@ export default {
 	margin-right: 1px;
 	margin-top: 60px;
 	-webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 11px;
+    height: 42px;
+  }
 }
 
 .messages-container {
@@ -801,7 +809,6 @@ textarea {
 	background: var(--chat-bg-color-input);
 	color: var(--chat-color);
 	caret-color: var(--chat-color-caret);
-	border: var(--chat-border-style-input);
 
 	&::placeholder {
 		color: var(--chat-color-placeholder);
