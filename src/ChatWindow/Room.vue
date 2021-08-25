@@ -194,6 +194,10 @@
 						<svg-icon name="close-outline" />
 					</div>
 
+          <div v-if="showFiles" class="svg-button" @click="launchFilePicker">
+            <svg-icon name="paperclip" width="20" height="20"  />
+          </div>
+
 					<emoji-picker
 						v-if="showEmojis && (!file || imageFile)"
 						:emojiOpened="emojiOpened"
@@ -202,14 +206,11 @@
 						@openEmoji="emojiOpened = $event"
 					></emoji-picker>
 
-					<div v-if="showFiles" class="svg-button" @click="launchFilePicker">
-						<svg-icon name="paperclip" />
-					</div>
-
 					<input
 						v-if="showFiles"
 						type="file"
 						ref="file"
+            accept=".png,.jpg,.jpeg,.svg"
 						@change="onFileChange($event.target.files)"
 						style="display:none"
 					/>
@@ -840,7 +841,11 @@ textarea {
 
 .icon-textarea {
 	display: flex;
-	margin: 12px 0 0 5px;
+  align-items: center;
+
+  > div {
+    cursor: pointer;
+  }
 
 	svg,
 	.wrapper {
